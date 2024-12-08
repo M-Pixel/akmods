@@ -179,7 +179,7 @@ jobs:
             ${{ steps.generate-tags.outputs.alias_tags }}
           build-args: |
             BUILDER_IMAGE=${{ env.BUILDER_IMAGE }}
-            KERNEL_ORG=${{ github.repository_owner }}
+            KERNEL_ORG=m-pixel
             KERNEL_FLAVOR=${{ matrix.kernel_flavor }}
             FEDORA_MAJOR_VERSION=${{ matrix.fedora_version }}
             RPMFUSION_MIRROR=${{ vars.RPMFUSION_MIRROR }}
@@ -196,7 +196,7 @@ jobs:
           tags: latest
           build-args: |
             BUILDER_IMAGE=${{ env.BUILDER_IMAGE }}
-            KERNEL_ORG=${{ github.repository_owner }}
+            KERNEL_ORG=ublue-os
             KERNEL_FLAVOR=${{ matrix.kernel_flavor }}
             FEDORA_MAJOR_VERSION=${{ matrix.fedora_version }}
             INPUT_AKMODS=${{ env.IMAGE_NAME }}
