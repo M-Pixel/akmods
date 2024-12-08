@@ -9,17 +9,13 @@ cd /tmp
 
 ### BUILD nvidia
 
-# disable rpmfusion and enable negativo17
-sed -i 's/enabled=1/enabled=0/' /etc/yum.repos.d/rpmfusion-*.repo
-cp /tmp/ublue-os-nvidia-addons/rpmbuild/SOURCES/negativo17-fedora-nvidia.repo /etc/yum.repos.d/
-
 dnf install -y \
-    akmod-nvidia*.fc${RELEASE}
+    akmod-nvidia-390xx-*.fc${RELEASE}
 
 # Either successfully build and install the kernel modules, or fail early with debug output
 rpm -qa |grep nvidia
 KERNEL_VERSION="$(rpm -q "${KERNEL_NAME}" --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}')"
-NVIDIA_AKMOD_VERSION="$(basename "$(rpm -q "akmod-nvidia" --queryformat '%{VERSION}-%{RELEASE}')" ".fc${RELEASE%%.*}")"
+NVIDIA_AKMOD_VERSION="$(basename "$(rpm -q "akmod-nvidia-390xx" --queryformat '%{VERSION}-%{RELEASE}')" ".fc${RELEASE%%.*}")"
 
 sed -i "s/^MODULE_VARIANT=.*/MODULE_VARIANT=$KERNEL_MODULE_TYPE/" /etc/nvidia/kernel.conf
 
