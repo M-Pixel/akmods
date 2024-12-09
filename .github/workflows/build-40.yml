@@ -1,4 +1,4 @@
-name: ublue akmods 41
+name: ublue akmods 40
 on:
   merge_group:
   pull_request:
@@ -14,4 +14,4 @@ jobs:
     uses: ./.github/workflows/reusable-build.yml
     secrets: inherit
     with:
-      fedora_version: 41
+      fedora_version: 40
