@@ -17,8 +17,6 @@ rpm -qa |grep nvidia
 KERNEL_VERSION="$(rpm -q "${KERNEL_NAME}" --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}')"
 NVIDIA_AKMOD_VERSION="$(basename "$(rpm -q "akmod-nvidia-390xx" --queryformat '%{VERSION}-%{RELEASE}')" ".fc${RELEASE%%.*}")"
 
-sed -i "s/^MODULE_VARIANT=.*/MODULE_VARIANT=$KERNEL_MODULE_TYPE/" /etc/nvidia/kernel.conf
-
 akmods --force --kernels "${KERNEL_VERSION}" --kmod "nvidia"
 
 modinfo /usr/lib/modules/${KERNEL_VERSION}/extra/nvidia/nvidia{,-drm,-modeset,-peermem,-uvm}.ko.xz > /dev/null || \
