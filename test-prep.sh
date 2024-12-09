@@ -124,7 +124,6 @@ if [[ -f $(find /tmp/akmods-rpms/kmods/kmod-nvidia-*.rpm 2> /dev/null) ]]; then
     sed -i '0,/enabled=0/{s/enabled=0/enabled=1/}' /etc/yum.repos.d/nvidia-container-toolkit.repo
     source /tmp/akmods-rpms/kmods/nvidia-vars
     dnf install -y \
-        libva-nvidia-driver \
         mesa-vulkan-drivers.i686 \
         nvidia-modprobe \
         nvidia-persistenced \
