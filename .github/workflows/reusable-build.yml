@@ -8,7 +8,7 @@ on:
         type: string
 env:
   IMAGE_BASE_NAME: akmods
-  IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
+  IMAGE_REGISTRY: ghcr.io/m-pixel
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}-${{ inputs.fedora_version }}
@@ -28,55 +28,11 @@ jobs:
         fedora_version:
           - ${{ inputs.fedora_version }}
         kernel_flavor:
-          - main
-          - asus
-          - fsync
-          - fsync-ba
           - bazzite
-          - surface
-          - coreos-stable
-          - coreos-testing
         cfile_suffix:
           - common
           - extra
           - nvidia
-          - nvidia-open
-          - zfs
-        exclude:
-          - fedora_version: 39
-            kernel_flavor: coreos-stable
-          - fedora_version: 40
-            kernel_flavor: coreos-testing
-          - fedora_version: 41
-            kernel_flavor: fsync
-          - fedora_version: 41
-            kernel_flavor: fsync-ba
-          - fedora_version: 41
-            kernel_flavor: surface
-          - fedora_version: 40
-            kernel_flavor: bazzite
-          - fedora_version: 39
-            kernel_flavor: fsync
-          - fedora_version: 39
-            kernel_flavor: fsync-ba
-          - fedora_version: 39
-            kernel_flavor: bazzite
-          - fedora_version: 39
-            kernel_flavor: asus
-          - fedora_version: 39
-            kernel_flavor: coreos-testing
-          - kernel_flavor: main
-            cfile_suffix: zfs
-          - kernel_flavor: asus
-            cfile_suffix: zfs
-          - kernel_flavor: fsync
-            cfile_suffix: zfs
-          - kernel_flavor: fsync-ba
-            cfile_suffix: zfs
-          - kernel_flavor: bazzite
-            cfile_suffix: zfs
-          - kernel_flavor: surface
-            cfile_suffix: zfs
 
     steps:
       # Checkout push-to-registry action GitHub repository
@@ -96,7 +52,7 @@ jobs:
           echo "FQ_BUILDER_IMAGE=${BUILDER_IMAGE}:${{ matrix.fedora_version }}" >> $GITHUB_ENV
           export KERNEL_IMAGE=${{ matrix.kernel_flavor }}-kernel
           echo "KERNEL_IMAGE=${KERNEL_IMAGE}" >> $GITHUB_ENV
-          echo "FQ_KERNEL_IMAGE=${{ env.IMAGE_REGISTRY }}/${KERNEL_IMAGE}:${{ matrix.fedora_version }}" >> $GITHUB_ENV
+          echo "FQ_KERNEL_IMAGE=ghcr.io/ublue-os/${KERNEL_IMAGE}:${{ matrix.fedora_version }}" >> $GITHUB_ENV
 
       - name: AppArmor Disable
         run: |
@@ -223,7 +179,7 @@ jobs:
             ${{ steps.generate-tags.outputs.alias_tags }}
           build-args: |
             BUILDER_IMAGE=${{ env.BUILDER_IMAGE }}
-            KERNEL_ORG=${{ github.repository_owner }}
+            KERNEL_ORG=ublue-os
             KERNEL_FLAVOR=${{ matrix.kernel_flavor }}
             FEDORA_MAJOR_VERSION=${{ matrix.fedora_version }}
             RPMFUSION_MIRROR=${{ vars.RPMFUSION_MIRROR }}
@@ -240,7 +196,7 @@ jobs:
           tags: latest
           build-args: |
             BUILDER_IMAGE=${{ env.BUILDER_IMAGE }}
-            KERNEL_ORG=${{ github.repository_owner }}
+            KERNEL_ORG=ublue-os
             KERNEL_FLAVOR=${{ matrix.kernel_flavor }}
             FEDORA_MAJOR_VERSION=${{ matrix.fedora_version }}
             INPUT_AKMODS=${{ env.IMAGE_NAME }}

@@ -67,8 +67,6 @@ curl -LsSf -o /etc/yum.repos.d/_copr_hikariknight-looking-glass-kvmfr.repo \
 fi
 
 if [[ -f $(find /tmp/akmods-rpms/kmods/kmod-nvidia-*.rpm) ]]; then
-    curl -Lo /etc/yum.repos.d/negativo17-fedora-nvidia.repo \
-        "https://negativo17.org/repos/fedora-nvidia.repo"
     curl -Lo /etc/yum.repos.d/nvidia-container-toolkit.repo \
         "https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo"
     curl -Lo /etc/yum.repos.d/nvidia-container.pp \
@@ -123,23 +121,17 @@ fi
 rm -f /tmp/certs/private_key_2.priv
 
 if [[ -f $(find /tmp/akmods-rpms/kmods/kmod-nvidia-*.rpm 2> /dev/null) ]]; then
-    sed -i '0,/enabled=0/{s/enabled=0/enabled=1/}' /etc/yum.repos.d/negativo17-fedora-nvidia.repo
     sed -i '0,/enabled=0/{s/enabled=0/enabled=1/}' /etc/yum.repos.d/nvidia-container-toolkit.repo
     source /tmp/akmods-rpms/kmods/nvidia-vars
     dnf install -y \
-        libnvidia-fbc \
-        libnvidia-ml.i686 \
-        libva-nvidia-driver \
         mesa-vulkan-drivers.i686 \
-        nvidia-driver \
-        nvidia-driver-cuda \
-        nvidia-driver-cuda-libs.i686 \
-        nvidia-driver-libs.i686 \
-        nvidia-modprobe \
-        nvidia-persistenced \
-        nvidia-settings \
+        nvidia-settings-390xx \
         nvidia-container-toolkit \
-        /tmp/akmods-rpms/kmods/kmod-nvidia-"${KERNEL_VERSION}"-"${NVIDIA_AKMOD_VERSION}".fc"${RELEASE}".rpm
+        nvidia-vaapi-driver \
+        xorg-x11-drv-nvidia-390xx \
+        /tmp/akmods-rpms/kmods/kmod-nvidia-390xx-"${KERNEL_VERSION}"-"${NVIDIA_AKMOD_VERSION}".fc"${RELEASE}".rpm
+#        nvidia-modprobe \
+#        nvidia-persistenced \
 elif [[ -f $(find /tmp/akmods-rpms/kmods/zfs/kmod-*.rpm 2> /dev/null) ]]; then
     dnf install -y \
         pv \

@@ -6,8 +6,6 @@ on:
       - main
     paths-ignore:
       - '**.md'
-  schedule:
-    - cron: '15 0 * * *'  # 10 minutes after kernel-cache
   workflow_dispatch:
 
 jobs:
