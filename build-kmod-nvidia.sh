@@ -19,8 +19,9 @@ NVIDIA_AKMOD_VERSION="$(basename "$(rpm -q "akmod-nvidia-390xx" --queryformat '%
 
 akmods --force --kernels "${KERNEL_VERSION}" --kmod "nvidia-390xx"
 
-ls /usr/lib/modules/${KERNEL_VERSION}/extra/nvidia
-modinfo /usr/lib/modules/${KERNEL_VERSION}/extra/nvidia/nvidia-390xx{,-drm,-modeset,-peermem,-uvm}.ko.xz > /dev/null || \
+ls /usr/lib/modules/${KERNEL_VERSION}/extra
+ls /usr/lib/modules/${KERNEL_VERSION}/extra/nvidia-390xx
+modinfo /usr/lib/modules/${KERNEL_VERSION}/extra/nvidia-390xx/nvidia{,-drm,-modeset,-peermem,-uvm}.ko.xz > /dev/null || \
 (cat /var/cache/akmods/nvidia/${NVIDIA_AKMOD_VERSION}-for-${KERNEL_VERSION}.failed.log && exit 1)
 
 # View license information
