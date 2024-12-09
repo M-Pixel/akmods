@@ -125,13 +125,13 @@ if [[ -f $(find /tmp/akmods-rpms/kmods/kmod-nvidia-*.rpm 2> /dev/null) ]]; then
     source /tmp/akmods-rpms/kmods/nvidia-vars
     dnf install -y \
         mesa-vulkan-drivers.i686 \
-        nvidia-modprobe \
-        nvidia-persistenced \
         nvidia-settings-390xx \
         nvidia-container-toolkit \
         nvidia-vaapi-driver \
         xorg-x11-drv-nvidia-390xx \
         /tmp/akmods-rpms/kmods/kmod-nvidia-390xx-"${KERNEL_VERSION}"-"${NVIDIA_AKMOD_VERSION}".fc"${RELEASE}".rpm
+#        nvidia-modprobe \
+#        nvidia-persistenced \
 elif [[ -f $(find /tmp/akmods-rpms/kmods/zfs/kmod-*.rpm 2> /dev/null) ]]; then
     dnf install -y \
         pv \
