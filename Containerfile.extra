@@ -15,7 +15,7 @@ FROM ${BUILDER_BASE} AS builder
 ARG FEDORA_MAJOR_VERSION="${FEDORA_MAJOR_VERSION:-40}"
 ARG KERNEL_FLAVOR="${KERNEL_FLAVOR:-main}"
 ARG RPMFUSION_MIRROR=""
-ARG DUAL_SIGN="true"
+ARG DUAL_SIGN="false"
 
 COPY build*.sh dual-sign*.sh /tmp/
 COPY certs /tmp/certs
@@ -37,19 +37,6 @@ RUN --mount=type=cache,dst=/var/cache/dnf \
     ; else \
         export KERNEL_NAME="kernel-surface" \
     ; fi && \
-    if grep -qv "asus" <<< "${KERNEL_FLAVOR}"; then \
-        /tmp/build-kmod-zenergy.sh && \
-        /tmp/build-kmod-evdi.sh \
-    ; fi && \
-    /tmp/build-kmod-ayaneo-platform.sh && \
-    /tmp/build-kmod-ayn-platform.sh && \
-    /tmp/build-kmod-bmi260.sh && \
-    /tmp/build-kmod-facetimehd.sh && \
-    /tmp/build-kmod-gcadapter_oc.sh && \
-    /tmp/build-kmod-nct6687d.sh && \
-    /tmp/build-kmod-rtl8814au.sh && \
-    /tmp/build-kmod-rtl88xxau.sh && \
-    /tmp/build-kmod-ryzen-smu.sh && \
     /tmp/build-kmod-vhba.sh && \
     /tmp/build-kmod-VirtualBox.sh && \
     /tmp/dual-sign.sh && \
