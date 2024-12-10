@@ -18,7 +18,7 @@ curl -LsSf -o /etc/yum.repos.d/_copr_mulderje-facetimehd-kmod.repo \
 ### BUILD facetimehd (succeed or fail-fast with debug output)
 dnf install -y \
     akmod-facetimehd-*.fc${RELEASE}.${ARCH}
-akmods --force --unsigned --kernels "${KERNEL}" --kmod facetimehd
+akmods --force --kernels "${KERNEL}" --kmod facetimehd
 modinfo "/usr/lib/modules/${KERNEL}/extra/facetimehd/facetimehd.ko.xz" > /dev/null \
 || (find /var/cache/akmods/facetimehd/ -name \*.log -print -exec cat {} \; && exit 1)
 

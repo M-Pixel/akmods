@@ -2,6 +2,14 @@
 
 set -oeux pipefail
 
+# Generate new key pair
+openssl req -new -x509 -newkey rsa:2048 -keyout private_key.priv -outform DER -out public_key.der -nodes -days 36500 -subj "/CN=Local build signing key/"
+
+# Place them where akmods expects them
+sudo mkdir -p /etc/pki/akmods/{certs,private}
+sudo cp private_key.priv /etc/pki/akmods/private/
+sudo cp public_key.der /etc/pki/akmods/certs/
+sudo chmod 600 /etc/pki/akmods/private/private_key.priv
 
 ### PREPARE REPOS
 # ARCH="$(rpm -E '%_arch')"

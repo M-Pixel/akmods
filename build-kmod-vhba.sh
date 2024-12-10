@@ -23,7 +23,7 @@ curl -LsSf -o /etc/yum.repos.d/_copr_rok-cdemu.repo "https://copr.fedorainfraclo
 ### BUILD vhba (succeed or fail-fast with debug output)
 dnf install -y \
     akmod-vhba-*.fc${RELEASE}.${ARCH}
-akmods --force --unsigned --kernels "${KERNEL}" --kmod vhba
+akmods --force --kernels "${KERNEL}" --kmod vhba
 modinfo /usr/lib/modules/${KERNEL}/extra/vhba/vhba.ko.xz > /dev/null \
 || (find /var/cache/akmods/vhba/ -name \*.log -print -exec cat {} \; && exit 1)
 
