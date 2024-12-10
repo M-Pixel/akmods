@@ -10,7 +10,7 @@ cp /tmp/ublue-os-akmods-addons/rpmbuild/SOURCES/_copr_ublue-os-akmods.repo /etc/
 
 dnf install -y \
     akmod-gcadapter_oc-*.fc${RELEASE}.${ARCH}
-akmods --force --kernels "${KERNEL}" --kmod gcadapter_oc
+akmods --force --unsigned --kernels "${KERNEL}" --kmod gcadapter_oc
 modinfo /usr/lib/modules/${KERNEL}/extra/gcadapter_oc/gcadapter_oc.ko.xz > /dev/null \
 || (find /var/cache/akmods/gcadapter_oc/ -name \*.log -print -exec cat {} \; && exit 1)
 
